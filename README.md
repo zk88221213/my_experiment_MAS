@@ -1,8 +1,10 @@
 # my_experiment
 controller and experiment in my paper
-多智能体编队gazebo平台实验
+
+多智能体编队（MAS）gazebo平台实验
 使用环境：ROS kinetic 以及ubuntu 16.04
 使用方法：
+
 1.下载并安装功能包
 
 2.启动gazebo仿真脚本robotworld.launch初始化相关信息；
