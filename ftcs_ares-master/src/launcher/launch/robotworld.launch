@@ -1,0 +1,97 @@
+<launch>
+
+    <!-- 设置launch文件的参数 -->
+    <arg name="world_name" value="$(find ares_gazebo)/worlds/grassground.world"/>
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <arg name="rb1x" default="0"/>
+    <arg name="rb1y" default="0.5"/>
+    <arg name="rb2x" default="1.0"/>
+    <arg name="rb2y" default="0.3"/>
+    <arg name="rb3x" default="1.0"/>
+    <arg name="rb3y" default="1.0"/>
+    <arg name="rb4x" default="2.0"/>
+    <arg name="rb4y" default="0.5"/>
+
+    <arg name="rho1" default="0.5"/>
+    <arg name="rho2" default="1.5"/>    
+    <arg name="rho3" default="2.5"/>
+    <arg name="rho4" default="3.5"/>
+
+    <!-- 运行gazebo仿真环境 -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)" />
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="headless" value="$(arg headless)"/>
+    </include>
+    
+    <group ns="robot_1">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' ns:=robot_1" /> 
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+            <param name="publish_frequency" type="double" value="50.0" />
+        </node>
+        <!--node pkg="velocity_manager" name="velocity_manager" type="velocity_manager.py" output="screen"/-->
+        <!--node pkg="flowfield_generator" name="flowfield_generator" type="periodical-random_velocity-flow.py" output="screen"/-->
+        <node name="urdf_spawner1" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model robot_1 -param robot_description -x $(arg rb1x) -y $(arg rb1y)"/>   
+    </group>
+    <node name="odomToStates1" pkg="target" type="odomToStates.py" >
+        <param name="number" type="string" value="robot_1"/>
+	<param name="rho" type="double" value="$(arg rho1)"/>
+    </node>
+    
+    
+    <group ns="robot_2">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' ns:=robot_2" /> 
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+            <param name="publish_frequency" type="double" value="50.0" />
+        </node>
+        <!--node pkg="velocity_manager" name="velocity_manager" type="velocity_manager.py" output="screen"/-->
+        <!--node pkg="flowfield_generator" name="flowfield_generator" type="periodical-random_velocity-flow.py" output="screen"/-->
+        <node name="urdf_spawner2" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model robot_2 -param robot_description -x $(arg rb2x) -y $(arg rb2y)"/>   
+    </group>
+    
+    <node name="odomToStates2" pkg="target" type="odomToStates.py">
+        <param name="number" type="string" value="robot_2"/>
+	<param name="rho" type="double" value="$(arg rho2)"/>
+    </node>
+
+    <group ns="robot_3">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' ns:=robot_3" /> 
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+            <param name="publish_frequency" type="double" value="50.0" />
+        </node>
+        <!--node pkg="velocity_manager" name="velocity_manager" type="velocity_manager.py" output="screen"/-->
+        <!--node pkg="flowfield_generator" name="flowfield_generator" type="periodical-random_velocity-flow.py" output="screen"/-->
+        <node name="urdf_spawner3" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model robot_3 -param robot_description -x $(arg rb3x) -y $(arg rb3y)"/>   
+    </group>
+
+    <node name="odomToStates3" pkg="target" type="odomToStates.py" output="screen">
+        <param name="number" type="string" value="robot_3"/>
+	<param name="rho" type="double" value="$(arg rho3)"/>
+    </node>
+
+    <group ns="robot_4">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ares_description)/urdf/ares_laser.xacro' ns:=robot_4" /> 
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+            <param name="publish_frequency" type="double" value="50.0" />
+        </node>
+        <!--node pkg="velocity_manager" name="velocity_manager" type="velocity_manager.py" output="screen"/-->
+        <!--node pkg="flowfield_generator" name="flowfield_generator" type="periodical-random_velocity-flow.py" output="screen"/-->
+        <node name="urdf_spawner3" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model robot_4 -param robot_description -x $(arg rb4x) -y $(arg rb4y)"/>   
+    </group>
+
+    <node name="odomToStates4" pkg="target" type="odomToStates.py">
+        <param name="number" type="string" value="robot_4"/>
+	<param name="rho" type="double" value="$(arg rho4)"/>
+    </node>
+</launch> 

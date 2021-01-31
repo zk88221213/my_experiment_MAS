@@ -1,0 +1,88 @@
+<launch>
+    <!-- 设置控制脚本中的参数-->
+    <arg name="k1" value="10"/>
+    <arg name="k2" value="10"/>
+    <arg name="a" value="0.2"/>
+    <!-- 自适应中参数-->
+    <arg name="quan1" value="0.1"/>
+    <arg name="tao1" value="10"/>
+    <arg name="quan2" value="0.1"/>
+    <arg name="tao2" value="10"/>
+
+
+    <node name="leaderMes" pkg="target" type="targetGen_pub.py" output="screen">
+        <param name="AngleSpeed" type="double" value="$(arg a)"/>
+	<param name="initArc" type="double" value="0"/>
+    </node>
+
+    <node name="follower1" pkg="target" type="follower_gazebo_first_sat.py" >
+        <param name="name" type="string" value="robot_1"/>
+	<param name="k1" type="double" value="$(arg k1)"/>
+	<param name="k2" type="double" value="$(arg k2)"/>
+	<param name="a" type="double" value="$(arg a)"/>
+	<param name="quan1" type="double" value="$(arg quan1)"/>
+	<param name="tao1" type="double" value="$(arg tao1)"/>
+	<param name="quan2" type="double" value="$(arg quan2)"/>
+	<param name="tao2" type="double" value="$(arg tao2)"/>
+	<param name="a1" type="double" value="0"/>
+	<param name="a2" type="double" value="1"/>
+	<param name="a3" type="double" value="0"/>
+	<param name="a4" type="double" value="0"/>
+	<param name="rho" type="double" value="0.5"/>
+	<param name="ro" type="double" value="0.1667"/>
+    </node>
+
+    <node name="follower2" pkg="target" type="follower_gazebo_first_sat.py" >
+        <param name="name" type="string" value="robot_2"/>
+	<param name="k1" type="double" value="$(arg k1)"/>
+	<param name="k2" type="double" value="$(arg k2)"/>
+	<param name="a" type="double" value="$(arg a)"/>
+	<param name="quan1" type="double" value="$(arg quan1)"/>
+	<param name="tao1" type="double" value="$(arg tao1)"/>
+	<param name="quan2" type="double" value="$(arg quan2)"/>
+	<param name="tao2" type="double" value="$(arg tao2)"/>
+	<param name="a1" type="double" value="0"/>
+	<param name="a2" type="double" value="0"/>
+	<param name="a3" type="double" value="0"/>
+	<param name="a4" type="double" value="1"/>
+	<param name="rho" type="double" value="1.5"/>
+	<param name="ro" type="double" value="0.1667"/>
+    </node>
+
+
+    <node name="follower3" pkg="target" type="follower_gazebo_first_sat.py" output="screen">
+        <param name="name" type="string" value="robot_3"/>
+	<param name="k1" type="double" value="$(arg k1)"/>
+	<param name="k2" type="double" value="$(arg k2)"/>
+	<param name="a" type="double" value="$(arg a)"/>
+	<param name="quan1" type="double" value="$(arg quan1)"/>
+	<param name="tao1" type="double" value="$(arg tao1)"/>
+	<param name="quan2" type="double" value="$(arg quan2)"/>
+	<param name="tao2" type="double" value="$(arg tao2)"/>
+	<param name="a1" type="double" value="1"/>
+	<param name="a2" type="double" value="0"/>
+	<param name="a3" type="double" value="0"/>
+	<param name="a4" type="double" value="1"/>
+	<param name="rho" type="double" value="2.5"/>
+	<param name="ro" type="double" value="0.3333"/>
+    </node>
+
+
+    <node name="follower4" pkg="target" type="follower_gazebo_first_sat.py" >
+        <param name="name" type="string" value="robot_4"/>
+	<param name="k1" type="double" value="$(arg k1)"/>
+	<param name="k2" type="double" value="$(arg k2)"/>
+	<param name="a" type="double" value="$(arg a)"/>
+	<param name="quan1" type="double" value="$(arg quan1)"/>
+	<param name="tao1" type="double" value="$(arg tao1)"/>
+	<param name="quan2" type="double" value="$(arg quan2)"/>
+	<param name="tao2" type="double" value="$(arg tao2)"/>
+	<param name="a1" type="double" value="1"/>
+	<param name="a2" type="double" value="0"/>
+	<param name="a3" type="double" value="1"/>
+	<param name="a4" type="double" value="0"/>
+	<param name="rho" type="double" value="3.5"/>
+	<param name="ro" type="double" value="0.3333"/>
+    </node>
+    
+</launch> 
